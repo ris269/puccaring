@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,8 +129,12 @@ public class HomeFragment extends Fragment {
                 if (user.getImageurl().equals("default")){
                     post_profile_image.setImageResource(R.mipmap.ic_launcher);
                 } else {
-                    //and this
-                    Glide.with(getContext()).load(user.getImageurl()).into(post_profile_image);
+                    try {
+                        Glide.with(getContext()).load(user.getImageurl()).into(post_profile_image);
+                    } catch (Exception e) {
+                        Log.e("@DKTK@Ex", e.getMessage());
+                        post_profile_image.setImageResource(R.mipmap.ic_launcher);
+                    }
                 }
             }
 

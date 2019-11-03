@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -145,7 +146,12 @@ public class ChatActivity extends AppCompatActivity {
                     receiver_image.setImageResource(R.mipmap.ic_launcher);
                 } else {
                     //and this
-                    Glide.with(getApplicationContext()).load(user.getImageurl()).into(receiver_image);
+                    try {
+                        Glide.with(getApplicationContext()).load(user.getImageurl()).into(receiver_image);
+                    } catch (Exception e) {
+                        Log.e("@DKKT@Ex", e.getMessage());
+                        receiver_image.setImageResource(R.mipmap.ic_launcher);
+                    }
                 }
 
                 readMesagges(fuser.getUid(), userid, user.getImageurl());
