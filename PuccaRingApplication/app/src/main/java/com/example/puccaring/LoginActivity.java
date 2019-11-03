@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +16,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -105,6 +109,19 @@ public class LoginActivity extends AppCompatActivity {
                                             }
                                         });
                                     } else {
+                                        try {
+                                            throw task.getException();
+                                        } catch (FirebaseAuthInvalidUserException e) {
+                                            Log.e("@DKTK@Exception", "Invalid Emaild Id");
+                                            Log.e("@DKTK@Exception", "FirebaseAuthInvalidUserException:= " + e.getMessage());
+                                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                                            Log.e("@DKTK@Exception", "Invalid Password");
+                                            Log.e("@DKTK@Exception", "FirebaseAuthInvalidCredentialsException:= " + e.getMessage());
+                                        } catch (FirebaseNetworkException e) {
+                                            Log.e("@DKTK@Exception", "FirebaseNetworkException:= " + e.getMessage());
+                                        } catch (Exception e) {
+                                            Log.e("@DKTK@Exception", e.getMessage());
+                                        }
                                         pd.dismiss();
                                         Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                     }
