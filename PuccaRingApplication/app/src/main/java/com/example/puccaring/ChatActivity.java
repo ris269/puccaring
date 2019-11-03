@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -122,7 +123,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-
+        //setup firebase variables
+        mImageStorage = FirebaseStorage.getInstance().getReference("Chats");
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
