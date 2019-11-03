@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1042460505196",
+    "firebase_url": "https://puccaring-7592d.firebaseio.com",
+    "project_id": "puccaring-7592d",
+    "storage_bucket": "puccaring-7592d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042460505196:android:e7bc9a31d45fe8c0139449",
+        "android_client_info": {
+          "package_name": "com.example.puccaring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1042460505196-9gr5c3o9rcthd2gjkg45lh1cen2c6t5r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhrTI0jB-3oGnA1rQHBGBKCXXNxIq9_lM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1042460505196-9gr5c3o9rcthd2gjkg45lh1cen2c6t5r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
