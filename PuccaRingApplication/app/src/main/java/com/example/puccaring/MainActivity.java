@@ -61,25 +61,25 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             selectedfragment = new HomeFragment();
-                            item.setIcon(R.color.selector_home);
+//                            item.setIcon(R.color.selector_home);
                             break;
                         /*case R.id.nav_search:
                             selectedfragment = new SearchFragment();
                             break;*/
                         case R.id.nav_toggle:
-                            item.setIcon(R.color.selector_toggle);
+//                            item.setIcon(R.color.selector_toggle);
                             selectedfragment = new ToggleFragment();
                             break;
                         case R.id.nav_heart:
                             selectedfragment = new NotificationFragment();
-                            item.setIcon(R.color.selector_notify);
+//                            item.setIcon(R.color.selector_notify);
                             break;
                         case R.id.nav_profile:
                             SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
                             editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                             editor.apply();
                             selectedfragment = new ProfileFragment();
-                            item.setIcon(R.color.selector_profile);
+//                            item.setIcon(R.color.selector_profile);
                             break;
                     }
                     if (selectedfragment != null) {

@@ -1,16 +1,21 @@
 package com.example.puccaring.Model;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Post {
     private String postid;
     private String postimage;
     private String description;
     private String publisher;
+    private String tags;
 
-    public Post(String postid, String postimage, String description, String publisher) {
+    public Post(String postid, String postimage, String description, String publisher, String tags) {
         this.postid = postid;
         this.postimage = postimage;
         this.description = description;
         this.publisher = publisher;
+        this.tags = tags;
     }
 
     public Post() {
@@ -46,5 +51,19 @@ public class Post {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public List<String> getListTagSeparate() {
+        if (tags == null)
+            return null;
+        return Arrays.asList(tags.split(","));
     }
 }

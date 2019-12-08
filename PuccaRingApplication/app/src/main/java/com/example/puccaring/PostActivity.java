@@ -5,8 +5,10 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -27,7 +29,11 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -72,25 +78,25 @@ public class PostActivity extends AppCompatActivity {
         choosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 CropImage.activity()
-                .setAspectRatio(1,1)
-                .start(PostActivity.this);
+                CropImage.activity()
+                        .setAspectRatio(1, 1)
+                        .start(PostActivity.this);
             }
         });
 
     }
 
-    private String getFileExtension(Uri uri){
+    private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    private void uploadImage_10(){
+    private void uploadImage_10() {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Posting");
         pd.show();
-        if (mImageUri != null){
+        if (mImageUri != null) {
             final StorageReference fileReference = storageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
 
@@ -118,6 +124,16 @@ public class PostActivity extends AppCompatActivity {
                         hashMap.put("postid", postid);
                         hashMap.put("postimage", miUrlOk);
                         hashMap.put("description", description.getText().toString());
+                        String str = description.getText().toString();
+                        Pattern MY_PATTERN = Pattern.compile("#(\\S+)");
+                        Matcher mat = MY_PATTERN.matcher(str);
+                        List<String> strs = new ArrayList<>();
+                        while (mat.find()) {
+                            //System.out.println(mat.group(1));
+                            strs.add(mat.group(1));
+                        }
+                        String tags = join(",", strs);
+                        hashMap.put("tags", tags);
                         hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                         reference.child(postid).setValue(hashMap);
@@ -158,5 +174,26 @@ public class PostActivity extends AppCompatActivity {
             startActivity(new Intent(PostActivity.this, MainActivity.class));
             finish();
         }
+    }
+
+    private static String join(String separator, List<String> input) {
+
+        if (input == null || input.size() <= 0) return "";
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < input.size(); i++) {
+
+            sb.append(input.get(i));
+
+            // if not the last item
+            if (i != input.size() - 1) {
+                sb.append(separator);
+            }
+
+        }
+
+        return sb.toString();
+
     }
 }

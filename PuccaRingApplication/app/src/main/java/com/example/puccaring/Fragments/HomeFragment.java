@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchFragment searchFragment = new SearchFragment();
+                SearchParentFragment searchFragment = new SearchParentFragment();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container,searchFragment);
                 fragmentTransaction.addToBackStack(null);

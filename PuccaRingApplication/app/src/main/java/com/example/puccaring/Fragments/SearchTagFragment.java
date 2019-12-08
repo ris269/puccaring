@@ -1,20 +1,25 @@
 package com.example.puccaring.Fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-
 import com.example.puccaring.Adapter.SearchPagerAdapter;
+import com.example.puccaring.Adapter.TagAdapter;
+import com.example.puccaring.Adapter.UserAdapter;
+import com.example.puccaring.Model.Post;
+import com.example.puccaring.Model.User;
+import com.example.puccaring.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,24 +28,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.example.puccaring.Adapter.UserAdapter;
-import com.example.puccaring.Model.User;
-import com.example.puccaring.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class SearchFragment extends Fragment {
+public class SearchTagFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
-    private List<User> userList;
-    private String currentValue = "";
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
+    private TagAdapter tagAdapter;
+    private List<String> strs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,29 +51,39 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        userList = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext(), userList, true);
-        recyclerView.setAdapter(userAdapter);
+        strs = new ArrayList<>();
+        tagAdapter = new TagAdapter(getContext(), strs);
+        recyclerView.setAdapter(tagAdapter);
 
         readUsers();
         return view;
     }
 
-    private void searchUsers(String s) {
-        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username")
-                .startAt(s)
-                .endAt(s + "\uf8ff");
+    private void searchTag(final String s) {
+        Query query = FirebaseDatabase.getInstance().getReference("Posts");
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userList.clear();
+                strs.clear();
+                Set<String> stringSet = new HashSet<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User user = snapshot.getValue(User.class);
-                    userList.add(user);
-                }
+                    Post post = snapshot.getValue(Post.class);
+//                    strs.add(user);
+                    if (post != null) {
+                        List<String> strings = post.getListTagSeparate();
+                        if (strings != null)
+                            for (String value : strings) {
+                                if (value.toLowerCase().contains(s))
+                                    stringSet.add(value);
+                            }
+                    }
 
-                userAdapter.notifyDataSetChanged();
+                }
+                strs.addAll(stringSet);
+                Log.e("value", new Gson().toJson(strs));
+
+                tagAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -82,6 +91,11 @@ public class SearchFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void readUsers() {
@@ -92,17 +106,17 @@ public class SearchFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (currentValue.equals("")) {
-                    userList.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        User user = snapshot.getValue(User.class);
-
-                        userList.add(user);
-
-                    }
-
-                    userAdapter.notifyDataSetChanged();
-                }
+//                if (search_bar.getText().toString().equals("")) {
+//                    userList.clear();
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        User user = snapshot.getValue(User.class);
+//
+//                        userList.add(user);
+//
+//                    }
+//
+//                    userAdapter.notifyDataSetChanged();
+//                }
             }
 
             @Override
@@ -117,6 +131,6 @@ public class SearchFragment extends Fragment {
     }
 
     public void seachingValue(CharSequence charSequence) {
-        searchUsers(charSequence.toString());
+        searchTag(charSequence.toString());
     }
 }

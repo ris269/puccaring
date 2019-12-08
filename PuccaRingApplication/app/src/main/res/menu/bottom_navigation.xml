@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/selector_home"
         android:title=""/>
     <!--<item
         android:id="@+id/nav_friends"
@@ -13,17 +13,17 @@
 
     <item
         android:id="@+id/nav_heart"
-        android:icon="@drawable/ic_notify"
+        android:icon="@drawable/selector_notify"
         android:title=""/>
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/selector_profile"
         android:title=""/>
     <item
         android:id="@+id/nav_toggle"
         android:title=""
-        android:icon="@drawable/ic_nav">
+        android:icon="@drawable/selector_toggle">
 
     </item>
 
