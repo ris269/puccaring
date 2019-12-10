@@ -136,7 +136,7 @@ public class PostActivity extends AppCompatActivity {
                         }
                         String tags = join(",", strs);
                         hashMap.put("tags", tags);
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:MM a");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
                         hashMap.put("datePost", simpleDateFormat.format(new Date()));
                         hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
 

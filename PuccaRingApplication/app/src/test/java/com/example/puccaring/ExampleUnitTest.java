@@ -16,7 +16,7 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy hh:MM a");
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy hh:mm a");
         System.out.print(simpleDateFormat.format(new Date()));
     }
 }
