@@ -2,12 +2,15 @@ package com.example.puccaring.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +32,7 @@ public class PostDetailFragment extends Fragment {
     String postid;
 
     private RecyclerView recyclerView;
+    private ImageView imv_back;
     private PostAdapter postAdapter;
     private List<Post> postList;
 
@@ -41,6 +45,13 @@ public class PostDetailFragment extends Fragment {
         postid = prefs.getString("postid", "none");
 
         recyclerView = view.findViewById(R.id.recycler_view);
+        imv_back = view.findViewById(R.id.imv_back);
+        imv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().popBackStack();
+            }
+        });
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -54,7 +65,7 @@ public class PostDetailFragment extends Fragment {
         return view;
     }
 
-    private void readPost(){
+    private void readPost() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postid);
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -63,7 +74,7 @@ public class PostDetailFragment extends Fragment {
                 postList.clear();
                 Post post = dataSnapshot.getValue(Post.class);
                 postList.add(post);
-                
+
                 postAdapter.notifyDataSetChanged();
             }
 

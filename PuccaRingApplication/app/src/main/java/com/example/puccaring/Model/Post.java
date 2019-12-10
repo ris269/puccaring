@@ -1,5 +1,7 @@
 package com.example.puccaring.Model;
 
+import androidx.annotation.Nullable;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -65,5 +67,15 @@ public class Post {
         if (tags == null)
             return null;
         return Arrays.asList(tags.split(","));
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof Post))
+            return false;
+        else {
+            Post temp = (Post) obj;
+            return temp.postid.equals(this.postid);
+        }
     }
 }

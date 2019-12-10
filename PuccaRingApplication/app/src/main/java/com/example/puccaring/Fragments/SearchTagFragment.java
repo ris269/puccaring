@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +53,18 @@ public class SearchTagFragment extends Fragment {
 
 
         strs = new ArrayList<>();
-        tagAdapter = new TagAdapter(getContext(), strs);
+        tagAdapter = new TagAdapter(getContext(), strs, new TagAdapter.OnTagClicked() {
+            @Override
+            public void onTagClickString(String value) {
+                SearchParentFragment searchParentFragment= (SearchParentFragment) getParentFragment();
+                TagFragment searchFragment = TagFragment.createInstance(value);
+                FragmentTransaction fragmentTransaction = searchParentFragment.getFragmentManager().beginTransaction();
+                fragmentTransaction.hide(searchParentFragment);
+                fragmentTransaction.add(R.id.fragment_container, searchFragment);
+                fragmentTransaction.addToBackStack(TagAdapter.class.getSimpleName());
+                fragmentTransaction.commit();
+            }
+        });
         recyclerView.setAdapter(tagAdapter);
 
         readUsers();

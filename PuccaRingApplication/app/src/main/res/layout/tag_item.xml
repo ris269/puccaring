@@ -13,9 +13,11 @@
             android:id="@+id/image_profile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@color/colorGreen" />
+            android:src="@color/grey" />
 
         <TextView
+            android:textSize="20sp"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -23,6 +25,7 @@
     </FrameLayout>
 
     <TextView
+        android:textColor="@color/colorBlack"
         android:id="@+id/tv_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

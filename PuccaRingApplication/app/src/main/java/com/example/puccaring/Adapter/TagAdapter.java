@@ -39,10 +39,12 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ImageViewHolder>
 
     private Context mContext;
     private List<String> strs = new ArrayList<>();
+    private OnTagClicked onTagClicked;
 
-    public TagAdapter(Context context, List<String> users) {
+    public TagAdapter(Context context, List<String> users, OnTagClicked onTagClicked) {
         mContext = context;
         this.strs = users;
+        this.onTagClicked = onTagClicked;
     }
 
     @NonNull
@@ -54,7 +56,14 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ImageViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull final TagAdapter.ImageViewHolder holder, final int position) {
-        holder.tv_tag.setText("#"+strs.get(position));
+        holder.tv_tag.setText("#" + strs.get(position));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onTagClicked != null)
+                    onTagClicked.onTagClickString(strs.get(position));
+            }
+        });
     }
 
     @Override
@@ -71,5 +80,9 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ImageViewHolder>
 
             tv_tag = itemView.findViewById(R.id.tv_tag);
         }
+    }
+
+    public interface OnTagClicked {
+        void onTagClickString(String value);
     }
 }
