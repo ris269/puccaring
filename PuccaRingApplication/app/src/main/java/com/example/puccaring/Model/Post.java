@@ -11,6 +11,7 @@ public class Post {
     private String description;
     private String publisher;
     private String tags;
+    private String datePost;
 
     public Post(String postid, String postimage, String description, String publisher, String tags) {
         this.postid = postid;
@@ -67,6 +68,10 @@ public class Post {
         if (tags == null)
             return null;
         return Arrays.asList(tags.split(","));
+    }
+
+    public String getDatePost() {
+        return datePost;
     }
 
     @Override

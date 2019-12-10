@@ -78,6 +78,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             holder.description.setVisibility(View.VISIBLE);
             holder.description.setText(post.getDescription());
         }
+        holder.tv_date.setText(post.getDatePost());
 
         publisherInfo(holder.image_profile, holder.username, holder.publisher, post.getPublisher());
         isLiked(post.getPostid(), holder.like);
@@ -240,7 +241,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView image_profile, post_image, like, comment, save, more;
-        public TextView username, likes, publisher, description, comments;
+        public TextView username, likes, publisher, description, comments,tv_date;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
@@ -256,6 +257,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             description = itemView.findViewById(R.id.description);
             comments = itemView.findViewById(R.id.comments);
             more = itemView.findViewById(R.id.more);
+            tv_date = itemView.findViewById(R.id.post_time);
         }
     }
 
